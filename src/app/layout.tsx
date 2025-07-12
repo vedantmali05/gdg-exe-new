@@ -2,6 +2,7 @@
 
 import { BrowserRouter } from 'react-router-dom';
 import './globals.css';
+import ClientOnly from '@/components/ClientOnly';
 // import './temp.css';
 
 export default function RootLayout({
@@ -12,9 +13,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <BrowserRouter>
-          {children}
-        </BrowserRouter>
+        <ClientOnly>
+          <BrowserRouter>
+            {children}
+          </BrowserRouter>
+        </ClientOnly>
+
+        <script src='./main.js'/>
       </body>
     </html>
   );

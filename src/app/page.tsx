@@ -9,6 +9,7 @@ import TaskPage from './tasks/TaskPage';
 import Assistant from './Assistant';
 import Community from './Community';
 import { ToastContainer } from 'react-toastify';
+import ClientOnly from '@/components/ClientOnly';
 
 export default function Home() {
   const users = getFromLocalStorage(STORAGE_KEYS.users);
@@ -18,13 +19,15 @@ export default function Home() {
 
   return (
     <main>
-      <Routes>
-        <Route path="/tasks" element={<TaskPage />} />
-        <Route path="/assistant" element={<Assistant />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="*" element={<Navigate to="/community" />} />
-      </Routes>
-      <ToastContainer />
+      <ClientOnly>
+        <Routes>
+          <Route path="/tasks" element={<TaskPage />} />
+          <Route path="/assistant" element={<Assistant />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="*" element={<Navigate to="/community" />} />
+        </Routes>
+        <ToastContainer />
+      </ClientOnly>
     </main>
   );
 }
