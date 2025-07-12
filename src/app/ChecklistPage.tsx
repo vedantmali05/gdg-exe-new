@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { dummyChecklistAreaList } from "../utils/data";
 import Todo from "./tasks/Todo";
@@ -22,15 +23,19 @@ const ChecklistPage = () => {
   const checklistInputRef = useRef<HTMLInputElement>(null);
 
   const [assistantChecklist, setAssistantChecklist] = useState<Checklist | []>([]);
-  const [allChecklists, setAllChecklists] = useState<Checklist[]>(() => {
-    const stored = getFromLocalStorage(STORAGE_KEYS.checklists);
-    return stored || [];
-  });
-
+  const [allChecklists, setAllChecklists] = useState<Checklist[]>([]);
+  
   const [activeChecklistMetaData, setActiveChecklistMetaData] = useState<Partial<Checklist> | "">("");
   const [activeChecklistItems, setActiveChecklistItems] = useState<Checklist | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [isWait, setIsWait] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    const stored = getFromLocalStorage(STORAGE_KEYS.checklists) || [];
+    setAllChecklists(stored);
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (!activeChecklistItems) return;
@@ -58,6 +63,10 @@ const ChecklistPage = () => {
       return null;
     }
   };
+
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

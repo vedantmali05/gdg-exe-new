@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import PrivateTodo from './PrivateTodo';
 import PublicTodo from './PublicTodo';
 import TaskTimeline from './TaskTimeline';
@@ -13,7 +14,14 @@ interface Tab {
 }
 
 const TaskPage: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<string>(getFromLocalStorage(STORAGE_KEYS.activeTaskPageTab) || 'timeline');
+    const [activeTab, setActiveTab] = useState<string>('timeline');
+    const [isClient, setIsClient] = useState(false);
+    
+    useEffect(() => {
+        const savedTab = getFromLocalStorage(STORAGE_KEYS.activeTaskPageTab) || 'timeline';
+        setActiveTab(savedTab);
+        setIsClient(true);
+    }, []);
 
     // Define your tabs data
     const taskTabs: Tab[] = [
@@ -34,6 +42,10 @@ const TaskPage: React.FC = () => {
                 return <TaskTimeline />;
         }
     };
+    
+    if (!isClient) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>

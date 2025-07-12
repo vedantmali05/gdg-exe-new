@@ -1,7 +1,8 @@
+
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { CLASSES, STORAGE_KEYS } from '../../utils/constants';
 import { formatDate } from '../../utils/dates';
-import { saveToLocalStorage } from '../../utils/browserStorage';
+import { saveToLocalStorage, getFromLocalStorage } from '../../utils/browserStorage';
 import { toast, ToastContainer } from 'react-toastify';
 import { dummyTimelineTasks } from '../../utils/data';
 import TaskTimelineCard from './TaskTimelineCard';
@@ -24,15 +25,17 @@ interface User {
 }
 
 const TaskTimeline: React.FC = () => {
-  const [allTasks, setAllTasks] = useState<Task[]>(() => {
-    const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.timelineTasks) || '[]');
-    return tasks || [];
-  });
+  const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
-  const [allUsers, setAllUsers] = useState<User[]>(() => {
-    const users = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
-    return users || [];
-  });
+  useEffect(() => {
+    const tasks = getFromLocalStorage(STORAGE_KEYS.timelineTasks) || [];
+    const users = getFromLocalStorage(STORAGE_KEYS.users) || [];
+    setAllTasks(tasks);
+    setAllUsers(users);
+    setIsClient(true);
+  }, []);
 
   const [isAddTaskDialogOpen, setIsAddTaskDialogOpen] = useState<boolean>(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -46,13 +49,15 @@ const TaskTimeline: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (taskTitleRef.current) taskTitleRef.current.value = editingTask?.title || '';
-    if (taskDescriptionRef.current) taskDescriptionRef.current.value = editingTask?.description || '';
-    if (taskStartDateRef.current) taskStartDateRef.current.value = editingTask?.startDate || '';
-    if (taskEndDateRef.current) taskEndDateRef.current.value = editingTask?.endDate || '';
-    if (taskAssignedByRef.current) taskAssignedByRef.current.value = editingTask?.assignedBy || '';
-    if (taskAssignedToRef.current) taskAssignedToRef.current.value = editingTask?.assignedTo || '';
-  }, [isAddTaskDialogOpen]); // runs every time dialog opens
+    if (isAddTaskDialogOpen) {
+        if (taskTitleRef.current) taskTitleRef.current.value = editingTask?.title || '';
+        if (taskDescriptionRef.current) taskDescriptionRef.current.value = editingTask?.description || '';
+        if (taskStartDateRef.current) taskStartDateRef.current.value = editingTask?.startDate || '';
+        if (taskEndDateRef.current) taskEndDateRef.current.value = editingTask?.endDate || '';
+        if (taskAssignedByRef.current) taskAssignedByRef.current.value = editingTask?.assignedBy || '';
+        if (taskAssignedToRef.current) taskAssignedToRef.current.value = editingTask?.assignedTo || '';
+    }
+  }, [isAddTaskDialogOpen, editingTask]);
 
   // Get the most past startDate and most new endDate
   const now = new Date();
@@ -86,6 +91,8 @@ const TaskTimeline: React.FC = () => {
   }
 
   useEffect(() => {
+    if (!isClient) return;
+
     const today = formatDate(new Date());
     const todayIndex = dateArray.indexOf(today);
 
@@ -98,7 +105,7 @@ const TaskTimeline: React.FC = () => {
         behavior: 'smooth',
       });
     }
-  }, [allUsers]);
+  }, [isClient, dateArray]);
 
   function groupTasksForTimeline(tasks: Task[]): Task[][] {
     // Helper function to check if two tasks overlap
@@ -238,6 +245,10 @@ const TaskTimeline: React.FC = () => {
       position: "bottom-left",
       autoClose: 2000,
     });
+  }
+
+  if (!isClient) {
+    return <div>Loading...</div>;
   }
 
   return (

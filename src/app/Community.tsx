@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -62,11 +63,13 @@ const Community: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editForm, setEditForm] = useState({ name: "", position: "", domain: "" });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     const storedUsers: User[] = getFromLocalStorage(STORAGE_KEYS.users) || [];
     setUsers(storedUsers);
     setGroupedUsers(groupUsers(storedUsers));
+    setIsClient(true);
   }, []);
 
   const openEditDialog = (user: User) => {
@@ -102,7 +105,7 @@ const Community: React.FC = () => {
     setIsDialogOpen(false);
   };
 
-  if (!groupedUsers) return <p className="p-8 text-lg text-gray-600">Loading community members...</p>;
+  if (!isClient || !groupedUsers) return <p className="p-8 text-lg text-gray-600">Loading community members...</p>;
 
   return (
     <>

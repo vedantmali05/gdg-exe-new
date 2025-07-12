@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useCallback } from 'react';
 import { CLASSES, ICONS, STORAGE_KEYS } from '../../utils/constants';
 import { getFromLocalStorage, saveToLocalStorage } from "../../utils/browserStorage.js"
@@ -40,17 +41,7 @@ const Todo: React.FC<TodoProps> = ({
     assistantChecklistName = "Generated Checklist",
     setAllChecklists
 }) => {
-    const [todos, setTodos] = useState<(TodoItem | string)[]>(() => {
-        if (isAssistantChecklist) return initialTodos;
-
-        try {
-            const saved = localStorage.getItem(storageKey);
-            return saved ? JSON.parse(saved) : initialTodos;
-        } catch {
-            console.error(`Failed to parse todos from localStorage for key: ${storageKey}. Returning initial.`);
-            return initialTodos;
-        }
-    });
+    const [todos, setTodos] = useState<(TodoItem | string)[]>(isAssistantChecklist ? initialTodos : []);
 
     const [newTodoTitle, setNewTodoTitle] = useState<string>('');
     const [newTodoAssignedTo, setNewTodoAssignedTo] = useState<string>('');
@@ -64,6 +55,16 @@ const Todo: React.FC<TodoProps> = ({
     const [users, setUsers] = useState<(User | string)[]>([]);
 
     useEffect(() => {
+        if (!isAssistantChecklist) {
+            try {
+                const saved = getFromLocalStorage(storageKey);
+                setTodos(saved ? saved : initialTodos);
+            } catch {
+                console.error(`Failed to parse todos from localStorage for key: ${storageKey}. Returning initial.`);
+                setTodos(initialTodos);
+            }
+        }
+        
         try {
             const savedUsers = getFromLocalStorage(STORAGE_KEYS.users) || [];
             setUsers(savedUsers);
@@ -71,12 +72,18 @@ const Todo: React.FC<TodoProps> = ({
             console.error('Failed to load users from localStorage:', e);
             setUsers([]);
         }
-    }, []);
+    }, [storageKey, isAssistantChecklist]);
+
+    useEffect(() => {
+        if (isAssistantChecklist) {
+            setTodos(initialTodos);
+        }
+    }, [initialTodos, isAssistantChecklist]);
 
     useEffect(() => {
         if (isAssistantChecklist) return;
         try {
-            localStorage.setItem(storageKey, JSON.stringify(todos));
+            saveToLocalStorage(storageKey, todos);
         } catch (e) {
             console.error(`Failed to save todos for key: ${storageKey}:`, e);
         }
