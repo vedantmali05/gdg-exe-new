@@ -1,3 +1,105 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base */
+@import url("./base/variable.css");
+@import url("./base/reset.css");
+@import url("./base/typography.css");
+
+/* /////////////////////////
+  MAIN CONTAINERS
+///////////////////////// */
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 100vw;
+}
+
+main .main-body {
+  height: calc(100vh - var(--header-height));
+  height: 100vh;
+  overflow: auto;
+  z-index: 99;
+  position: relative;
+}
+
+@media screen and (min-width: 1024px) {
+  #root {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #root main {
+    flex: 1;
+  }
+}
+
+.main-sec h2 {
+  font-size: var(--fs-600);
+  margin-bottom: 1.2rem;
+}
+
+.main-sec header h2 {
+  margin-bottom: 0;
+}
+
+/* /////////////////////////
+  Other
+///////////////////////// */
+.flex.sp-btw {
+  justify-content: space-between;
+}
+
+*:has(> .empty-placeholder) {
+  position: relative;
+  overflow: hidden;
+}
+
+.empty-placeholder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: hsl(var(--clr-neutral-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.6rem;
+}
+
+.empty-placeholder span {
+  color: hsl(var(--clr-neutral-700));
+  text-wrap: balance;
+}
+
+.empty-placeholder span.text-emphasis {
+  margin-bottom: 0.2rem;
+}
+
+.empty-placeholder button {
+  margin-top: 0.4rem;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  white-space: nowrap;
+}
+
+button.primary {
+  font-size: var(--fs-400);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.peer-checked-status:has(input:checked) > div {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  border-color: #3b82f6;
+}

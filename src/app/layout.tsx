@@ -1,19 +1,18 @@
-import type {Metadata} from 'next';
-import './globals.css';
+"use client"
 
-export const metadata: Metadata = {
-  title: 'Hello World App',
-  description: 'A simple Next.js app.',
-};
+import './globals.css';
+// import './temp.css';
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+          {children}
+      </body>
     </html>
   );
 }

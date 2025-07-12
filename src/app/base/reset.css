@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--ff-default);
+  font-size: var(--fs-200);
+  color: hsl(var(--clr-black));
+  transition: all 0.2s linear;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+svg.icon {
+  fill: none;
+  stroke: hsl(var(--clr-neutral-900));
+  stroke-width: 1.5;
+  --size: 2rem;
+  width: var(--size);
+  min-width: var(--size);
+  height: var(--size);
+  min-height: var(--size);
+  aspect-ratio: 1;
+}
+
+/* /////////////////////////
+  UTITILY CLASSES
+///////////////////////// */
+
+/* Show on mobile only (Hide on Tab & Desktop) */
+@media screen and (min-width: 480px) {
+  .mobile-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* Show below 600px only, hide beyond that */
+@media screen and (min-width: 600px) {
+  .below-600-only {
+    display: none !important;
+  }
+}
+
+/* Hide on Mobile (Show only on Tab & Desktop) */
+@media screen and (max-width: 480px) {
+  .tab-desk-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* Hide on Tablet (Show only on Mobile & Desktop) */
+@media screen and (min-width: 480px) and (max-width: 1023px) {
+  .hide-on-tab-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* Hide on Desktop (Show only on Mobile & Tablet) */
+@media screen and (min-width: 1024px) {
+  .mobile-tab-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* Hide on Mobile & Desktop (Show only on Tablet) */
+@media screen and (max-width: 479px), (min-width: 1024px) {
+  .tab-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* Hide on Mobile & Tablet (Show only on Desktop) */
+@media screen and (max-width: 1023px) {
+  .desktop-only {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* /////////////////////////
+  TABLE reset
+///////////////////////// */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+}
+
+th,
+td {
+  padding: 0.8rem;
+  text-align: left;
+}
+
+thead {
+  background-color: #f8f8f8;
+  font-weight: 600;
+}

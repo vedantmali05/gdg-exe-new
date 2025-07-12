@@ -1,0 +1,64 @@
+:root {
+  /* /////////////////////////
+      COLORS
+    ///////////////////////// */
+
+  /* Primary */
+  --clr-white: 0, 0%, 100%;
+  --clr-black: 0, 0%, 0%;
+
+  /* Neutrals */
+  --clr-neutral-100: 220, 5%, 97%;
+  --clr-neutral-150: 220, 5%, 92%;
+  --clr-neutral-200: 220, 5%, 87%;
+  --clr-neutral-300: 220, 5%, 77%;
+  --clr-neutral-400: 220, 5%, 67%;
+  --clr-neutral-500: 220, 5%, 57%;
+  --clr-neutral-600: 220, 5%, 47%;
+  --clr-neutral-700: 220, 5%, 37%;
+  --clr-neutral-800: 220, 5%, 27%;
+  --clr-neutral-900: 220, 5%, 17%;
+
+  /* Scrim Colors */
+  --clr-scrim-100: 0, 0%, 0%, 0.04;
+  --clr-scrim-200: 0, 0%, 0%, 0.08;
+  --clr-scrim-300: 0, 0%, 0%, 0.12;
+  --clr-scrim-400: 0, 0%, 0%, 0.16;
+
+  /* Gradient Setup */
+  /* Base Colors */
+  --clr-gradient-overlay: var(--clr-white);
+  --gradient-angle: 0deg;
+
+  /* Linear Gradient */
+  --clr-gradient-linear: linear-gradient(
+    var(--gradient-angle),
+    hsl(var(--clr-gradient-overlay)),
+    hsl(var(--clr-gradient-overlay))
+  );
+
+  /* /////////////////////////
+      TYPOGRAPHY
+    ///////////////////////// */
+
+  /* Font Sizes */
+  --fs-900: calc(var(--fs-800) * 1.125);
+  --fs-800: calc(var(--fs-700) * 1.125);
+  --fs-700: calc(var(--fs-600) * 1.125);
+  --fs-600: calc(var(--fs-500) * 1.125);
+  --fs-500: calc(var(--fs-400) * 1.125);
+  --fs-400: 16px;
+  --fs-300: calc(var(--fs-400) / 1.125);
+  --fs-200: calc(var(--fs-300) / 1.125);
+
+  /* Font Families */
+  --ff-default: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+
+  /* Shadows */
+  --shdw-soft-tile: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shdw-soft-bottom-banner: 0 -4px 6px -2px rgba(0, 0, 0, 0.06);
+  --shdw-soft-cta-white: 0 4px 12px rgba(255, 255, 255, 0.2);
+  --shdw-soft-fab-white: 0 6px 12px rgba(255, 255, 255, 0.2);
+}
