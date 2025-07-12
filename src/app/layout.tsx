@@ -1,9 +1,6 @@
-"use client"
-
-import { BrowserRouter } from 'react-router-dom';
 import './globals.css';
-import ClientOnly from '@/components/ClientOnly';
-// import './temp.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout({
   children,
@@ -13,13 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClientOnly>
-          <BrowserRouter>
-            {children}
-          </BrowserRouter>
-        </ClientOnly>
-
-        <script src='./main.js'/>
+        {children}
+        <ToastContainer />
+        <script src='/main.js'/>
       </body>
     </html>
   );

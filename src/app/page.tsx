@@ -3,13 +3,9 @@
 import { getFromLocalStorage, saveToLocalStorage } from '@/utils/browserStorage';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { dummyUsers } from '@/utils/data';
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import TaskPage from './tasks/TaskPage';
-import Assistant from './Assistant';
-import Community from './Community';
-import { ToastContainer } from 'react-toastify';
-import ClientOnly from '@/components/ClientOnly';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Community from './community/page';
 
 export default function Home() {
   const users = getFromLocalStorage(STORAGE_KEYS.users);
@@ -17,17 +13,15 @@ export default function Home() {
     saveToLocalStorage(STORAGE_KEYS.users, dummyUsers);
   }
 
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/community');
+  }, [router]);
+
   return (
     <main>
-      <ClientOnly>
-        <Routes>
-          <Route path="/tasks" element={<TaskPage />} />
-          <Route path="/assistant" element={<Assistant />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="*" element={<Navigate to="/community" />} />
-        </Routes>
-        <ToastContainer />
-      </ClientOnly>
+      <Community />
     </main>
   );
 }
