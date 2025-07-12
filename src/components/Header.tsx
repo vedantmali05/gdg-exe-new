@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ heading = "Your GDG on Campus Tasks" })
                     `}
                 >
                     {ICONS.communityImg ?? "👩‍🎓"}
-                    <span className="inline">Community</span>
+                    <span className="hidden md:inline">Community</span>
                 </button>
 
                 <button
@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ heading = "Your GDG on Campus Tasks" })
                     `}
                 >
                     {ICONS.tasksImg ?? "✅"}
-                    <span className="inline">Tasks</span>
+                    <span className="hidden md:inline">Tasks</span>
                 </button>
 
                 <button
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ heading = "Your GDG on Campus Tasks" })
                     `}
                 >
                     {ICONS.assistantImg ?? "🤖"}
-                    <span className="inline">Checklists</span>
+                    <span className="hidden md:inline">Checklists</span>
                 </button>
             </div>
         </header>
